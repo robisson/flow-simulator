@@ -1,0 +1,43 @@
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 33vw;
+  background-color: $bg-panel-color;
+
+  h2 {
+    background-color: #ccc;
+    color: #000;
+    margin: 0px;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  h3 {
+    color: #000;
+    text-align: center;
+  }
+
+  .grid2x2 {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+  .grid2x2 > div {
+    display: flex;
+    flex-basis: calc(50% - 10px);
+    justify-content: center;
+    flex-direction: column;
+  }
+  .grid2x2 > div > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  .box {
+    margin: 5px;
+  }
+}
