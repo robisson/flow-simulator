@@ -1385,8 +1385,8 @@ const data = {
   hourByResource: 160,
   costByHour: 65,
   hourByDay: 6,
-  timeUpdate: 0,
-  resources: 1,
+  timeUpdate: 1000,
+  resources: 23,
   useResources: 0,
   board: [
     {
