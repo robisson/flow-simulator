@@ -3,7 +3,7 @@ import Column from "./Column";
 import "./main.scss";
 import data from "../data";
 import moment from "moment";
-import { getRandomIntInclusive } from "../lib";
+import { getRandomIntInclusive } from "../lib/util";
 import Panel from "./Panel";
 
 class App extends React.Component {

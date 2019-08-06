@@ -12,8 +12,8 @@ const Panel = ({
     <div className="panel">
       <h2>Summary</h2>
 
-      <div class="grid2x2">
-        <div class="box">
+      <div className="grid2x2">
+        <div className="box">
           <div>
             <h3>
               Dias corridos
@@ -21,7 +21,7 @@ const Panel = ({
             </h3>
           </div>
         </div>
-        <div class="box">
+        <div className="box">
           <div>
             <h3>
               Desenvolvedores alocados:
@@ -29,7 +29,7 @@ const Panel = ({
             </h3>
           </div>
         </div>
-        <div class="box">
+        <div className="box">
           <div>
             <h3>
               Investimento: <br />
@@ -38,7 +38,7 @@ const Panel = ({
             </h3>
           </div>
         </div>
-        <div class="box">
+        <div className="box">
           <div>
             <h3>
               CA recuperado: R$
@@ -47,7 +47,7 @@ const Panel = ({
             </h3>
           </div>
         </div>
-        <div class="box">
+        <div className="box">
           <div>
             <h3>
               Horas trabalhadas:
