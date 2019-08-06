@@ -9,7 +9,7 @@ export default class TasksDone {
 
   getTasks() {
     return [...this._tasks.filter(task => {
-      return this._date.diff(task.getEstimationDate()) > 0;
+      return this._date.diff(task.getEstimationDate(), 'days') >= 0;
     })];
   }
 }
