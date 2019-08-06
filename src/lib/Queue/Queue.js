@@ -6,10 +6,6 @@ export default class Queue {
     this.add(elements);
   }
 
-  setName(name) {
-    this.name = name;
-  }
-
   getName() {
     return this.name;
   }

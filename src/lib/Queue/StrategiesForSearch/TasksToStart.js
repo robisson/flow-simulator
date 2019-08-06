@@ -31,7 +31,6 @@ export default class TasksToStart {
         return true;
       } else if (this._resourcesAvaiables > 0) {
         task.setResources(this._resourcesAvaiables);
-
         this._resourcesAvaiables = 0;
 
         task.setEstimationDate(estimator.getEstimation());
