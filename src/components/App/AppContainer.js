@@ -1,13 +1,14 @@
 import React from "react";
 import "./main.scss";
 import moment from "moment";
-import Queue from "../../lib/Queue/Queue";
-import TaskManager from "../../lib/TaskManager";
+import QueuesFactory from "../../domain/Queue/QueueFactory";
+import TaskManager from "../../domain/TaskManager";
 import App from "./App";
-import Task from "../../lib/Queue/Task";
 
 class AppContainer extends React.Component {
   taskManager = null;
+  dateFormat = "DD/MM/YYYY";
+  interval = null;
 
   constructor(props) {
     super(props);
@@ -22,19 +23,14 @@ class AppContainer extends React.Component {
       hourByDay: props.data.hourByDay,
       timeUpdate: props.data.timeUpdate,
       resources: props.data.resources,
-      useResources: props.data.useResources
+      useResources: props.data.useResources,
+      investiment: 0,
+      costOfDelay: 0
     };
-
-    this.dateFormat = "DD/MM/YYYY";
-    this.costOfDelay = 0;
-    this.investiment = 0;
-    this.days = 0;
-    this.hoursDelivery = 0;
-    this.interval = null;
   }
 
   componentDidMount() {
-    this.startTasks();
+    this.startFlow();
   }
 
   getNextDay(date) {
@@ -46,54 +42,39 @@ class AppContainer extends React.Component {
     return [date, days];
   }
 
-  timer() {
-    setInterval(() => {
+  updateDays() {
+    this.interval = setInterval(() => {
       let [date, days] = this.getNextDay(this.state.date);
 
-      this.taskManager.updateDate(date);
-      let filas = this.taskManager.getQueues();
+      this.taskManager.updateTasksStatus(date);
 
       this.setState({
-        queues: this.taskManager.getQueues(filas),
+        queues: this.taskManager.getQueues(),
         days: this.state.days + days
       });
-    }, 1000);
+
+      if (this.taskManager.allTasksDone()) {
+        clearInterval(this.interval);
+      }
+    }, this.state.timeUpdate);
   }
 
-  startTasks() {
+  startFlow() {
     let {
       data: { board: queues }
     } = this.props;
 
-    let [todoQueue, doingQueue, doneQueue] = queues.map(
-      ({ name, tasks }) =>
-        new Queue(
-          name,
-          tasks.map(
-            ({ id, name, costOfDelay, estimation, estimatedDate, resources }) =>
-              new Task(
-                id,
-                name,
-                costOfDelay,
-                estimation,
-                estimatedDate,
-                resources
-              )
-          )
-        )
-    );
-
-    this.taskManager = new TaskManager(
+    this.taskManager = TaskManager.create(
       this.state.date,
       this.state.resources,
       this.state.hourByDay
     );
 
-    this.taskManager.setQueues(todoQueue, doingQueue, doneQueue);
+    this.taskManager.setQueues(...QueuesFactory.createQueuesFrom(queues));
 
     this.setState({ queues: this.taskManager.getQueues() });
 
-    this.timer();
+    this.updateDays();
   }
 
   render() {
@@ -103,12 +84,12 @@ class AppContainer extends React.Component {
         queues={this.state.queues}
         dateFormat={this.dateFormat}
         days={this.state.days}
-        hoursDelivery={this.hoursDelivery}
-        investiment={this.investiment}
-        costOfDelay={this.costOfDelay}
+        hoursDelivery={this.state.hoursDelivery}
+        investiment={this.state.investiment}
+        costOfDelay={this.state.costOfDelay}
         resources={this.state.resources}
         useResources={this.state.useResources}
-        timer={1}
+        timer={this.state.timer}
       />
     );
   }
