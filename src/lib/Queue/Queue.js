@@ -1,9 +1,9 @@
 export default class Queue {
   _tasks = [];
 
-  constructor(name, elements = []) {
+  constructor(name, tasks = []) {
     this.name = name;
-    this.add(elements);
+    this.add(tasks);
   }
 
   getName() {

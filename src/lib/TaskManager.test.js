@@ -26,18 +26,15 @@ describe("TaskManager", () => {
   });
 
   it("If the day change, tasks must to start in the queue doing", () => {
-
     taskManager.updateDate(moment([2019, 7, 1]));
     let [todoUpdated, doingUpdated, done] = taskManager.getQueues();
 
     expect(todoUpdated.getSize()).toBe(0);
     expect(doingUpdated.getSize()).toBe(3);
     expect(done.getSize()).toBe(0);
-
   });
-  
-  it("If the day change, tasks must to start in the queue doing 2", () => {
 
+  it("If the day change, tasks must to start in the queue doing 2", () => {
     taskManager.updateDate(moment([2019, 7, 5]));
     let [todoUpdated, doingUpdated, done] = taskManager.getQueues();
 
@@ -46,5 +43,19 @@ describe("TaskManager", () => {
     expect(done.getSize()).toBe(0);
   });
 
+  it("If to do and doing queue is empty, should return empty queues ", () => {
+    let todoQueue = new Queue("To do");
+    let doingQueue = new Queue("Doing");
+    let doneQueue = new Queue("Done");
+    taskManager = new TaskManager(moment(), 14, 6);
+    taskManager.setQueues(todoQueue, doingQueue, doneQueue);
 
+    taskManager.updateDate(moment([2019, 7, 5]));
+
+    let [todoUpdated, doingUpdated, done] = taskManager.getQueues();
+
+    expect(todoUpdated.getSize()).toBe(0);
+    expect(doingUpdated.getSize()).toBe(0);
+    expect(done.getSize()).toBe(0);
+  });
 });
